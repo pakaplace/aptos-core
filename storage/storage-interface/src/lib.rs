@@ -7,7 +7,6 @@ use aptos_types::{
     access_path::AccessPath,
     account_address::AccountAddress,
     account_config::aptos_root_address,
-    account_state::AccountState,
     contract_event::{ContractEvent, EventByVersionWithProof, EventWithProof},
     epoch_change::EpochChangeProof,
     epoch_state::EpochState,
@@ -22,6 +21,7 @@ use aptos_types::{
     state_proof::StateProof,
     state_store::{
         state_key::StateKey,
+        state_key_prefix::StateKeyPrefix,
         state_value::{
             StateKeyAndValue, StateValue, StateValueChunkWithProof, StateValueWithProof,
         },
@@ -32,7 +32,7 @@ use aptos_types::{
     },
 };
 use serde::{Deserialize, Serialize};
-use std::{convert::TryFrom, sync::Arc};
+use std::{collections::HashMap, sync::Arc};
 use thiserror::Error;
 
 #[cfg(any(feature = "testing", feature = "fuzzing"))]
@@ -324,6 +324,17 @@ pub trait DbReader: Send + Sync {
         unimplemented!()
     }
 
+    /// Returns the key, value pairs for a particular state key prefix at at desired version. This
+    /// API can be used to get all resources of an account by passing the account address as the
+    /// key prefix.
+    fn get_state_values_by_key_prefix(
+        &self,
+        key_prefix: &StateKeyPrefix,
+        version: Version,
+    ) -> Result<HashMap<StateKey, StateValue>> {
+        unimplemented!()
+    }
+
     /// Returns the latest ledger info, if any.
     fn get_latest_ledger_info_option(&self) -> Result<Option<LedgerInfoWithSignatures>> {
         unimplemented!()
@@ -525,47 +536,62 @@ impl MoveStorage for &dyn DbReader {
         access_path: AccessPath,
         version: Version,
     ) -> Result<Vec<u8>> {
-        let (state_value, _) = self.get_state_value_with_proof_by_version(
-            &StateKey::AccountAddressKey(access_path.address),
-            version,
-        )?;
-        let account_state =
-            AccountState::try_from(&state_value.ok_or_else(|| {
-                format_err!("missing blob in account state/account does not exist")
-            })?)?;
+        let (state_value, _) = self
+            .get_state_value_with_proof_by_version(&StateKey::AccessPath(access_path), version)?;
 
-        Ok(account_state
-            .get(&access_path.path)
-            .ok_or_else(|| format_err!("no value found in account state"))?
-            .clone())
+        state_value
+            .ok_or_else(|| format_err!("no value found in DB"))?
+            .maybe_bytes
+            .ok_or_else(|| format_err!("no value found in DB"))
     }
 
     fn fetch_config_by_version(&self, config_id: ConfigID, version: Version) -> Result<Vec<u8>> {
-        let aptos_root_state = AccountState::try_from(
-            &self
-                .get_state_value_with_proof_by_version(
-                    &StateKey::AccountAddressKey(aptos_root_address()),
-                    version,
-                )?
-                .0
-                .ok_or_else(|| {
-                    format_err!("missing blob in account state/account does not exist")
-                })?,
-        )?;
-
-        match aptos_root_state.get(&access_path_for_config(config_id).path) {
-            Some(config) => Ok(config.to_vec()),
-            _ => aptos_root_state
-                .get(&dpn_access_path_for_config(config_id).path)
-                .map_or_else(
-                    || {
-                        Err(format_err!(
-                            "no config {} found in aptos root account state",
-                            config_id
-                        ))
-                    },
-                    |bytes| Ok(bytes.to_vec()),
-                ),
+        let config_value_option = self
+            .get_state_value_with_proof_by_version(
+                &StateKey::AccessPath(AccessPath::new(
+                    aptos_root_address(),
+                    access_path_for_config(config_id).path,
+                )),
+                version,
+            )?
+            .0;
+        match config_value_option {
+            Some(config_value) => config_value.maybe_bytes.map_or_else(
+                || {
+                    Err(format_err!(
+                        "no config {} found in aptos root account state",
+                        config_id
+                    ))
+                },
+                |bytes| Ok(bytes.to_vec()),
+            ),
+            _ => {
+                let dpn_config_value_option = self
+                    .get_state_value_with_proof_by_version(
+                        &StateKey::AccessPath(AccessPath::new(
+                            aptos_root_address(),
+                            dpn_access_path_for_config(config_id).path,
+                        )),
+                        version,
+                    )?
+                    .0;
+                if let Some(dpn_config_value) = dpn_config_value_option {
+                    dpn_config_value.maybe_bytes.map_or_else(
+                        || {
+                            Err(format_err!(
+                                "no dpn config {} found in aptos root account state",
+                                config_id
+                            ))
+                        },
+                        |bytes| Ok(bytes.to_vec()),
+                    )
+                } else {
+                    Err(format_err!(
+                        "no dpn config {} found in aptos root account state",
+                        config_id
+                    ))
+                }
+            }
         }
     }
 
@@ -640,6 +666,33 @@ pub trait DbWriter: Send + Sync {
     fn delete_genesis(&self) -> Result<()> {
         unimplemented!()
     }
+}
+
+pub fn get_state_value_resolver_for_version(
+    db_reader: Arc<dyn DbReader>,
+    version: Version,
+) -> Box<dyn Fn(&StateKey) -> anyhow::Result<Option<Vec<u8>>>> {
+    Box::new(move |x| {
+        let state_value_with_proof = db_reader.get_state_value_with_proof_by_version(x, version)?;
+        if let Some(state_value) = state_value_with_proof.0 {
+            return Ok(state_value.maybe_bytes.as_ref().cloned());
+        } else {
+            Ok(None)
+        }
+    })
+}
+
+pub fn get_state_value_resolver_for_latest_version(
+    db_reader: Arc<dyn DbReader>,
+) -> Box<dyn Fn(&StateKey) -> anyhow::Result<Option<Vec<u8>>>> {
+    Box::new(move |x| {
+        let state_value_option = db_reader.get_latest_state_value(x.clone())?;
+        if let Some(state_value) = state_value_option {
+            return Ok(state_value.maybe_bytes.as_ref().cloned());
+        } else {
+            Ok(None)
+        }
+    })
 }
 
 #[derive(Clone)]

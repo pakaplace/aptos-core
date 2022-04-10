@@ -9,7 +9,6 @@ use aptos_state_view::StateView;
 use aptos_types::{
     access_path::AccessPath,
     account_address::AccountAddress,
-    account_config::{aptos_root_address, validator_set_address},
     chain_id::ChainId,
     contract_event::ContractEvent,
     event::EventKey,
@@ -146,8 +145,14 @@ impl VMExecutor for MockVM {
                     ));
                 }
                 MockVMTransaction::Reconfiguration => {
-                    read_balance_from_storage(state_view, &balance_ap(validator_set_address()));
-                    read_balance_from_storage(state_view, &balance_ap(aptos_root_address()));
+                    read_state_value_from_storage(
+                        state_view,
+                        &dpn_access_path_for_config(ValidatorSet::CONFIG_ID),
+                    );
+                    read_state_value_from_storage(
+                        state_view,
+                        &AccessPath::new(config_address(), ConfigurationResource::resource_path()),
+                    );
                     outputs.push(TransactionOutput::new(
                         // WriteSet cannot be empty so use genesis writeset only for testing.
                         gen_genesis_writeset(),
@@ -206,6 +211,15 @@ fn read_u64_from_storage(state_view: &impl StateView, access_path: &AccessPath) 
         .get_state_value(&StateKey::AccessPath(access_path.clone()))
         .expect("Failed to query storage.")
         .map_or(0, |bytes| decode_bytes(&bytes))
+}
+
+fn read_state_value_from_storage(
+    state_view: &impl StateView,
+    access_path: &AccessPath,
+) -> Option<Vec<u8>> {
+    state_view
+        .get_state_value(&StateKey::AccessPath(access_path.clone()))
+        .expect("Failed to query storage.")
 }
 
 fn decode_bytes(bytes: &[u8]) -> u64 {

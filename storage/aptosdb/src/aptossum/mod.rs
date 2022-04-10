@@ -7,10 +7,10 @@ use aptos_config::config::{RocksdbConfig, NO_OP_STORAGE_PRUNER_CONFIG};
 use aptos_types::{
     contract_event::ContractEvent,
     event::EventKey,
-    state_store::{state_key::StateKey, state_value::StateValue},
+    state_store::{state_key::StateKey, state_key_prefix::StateKeyPrefix, state_value::StateValue},
     transaction::{Transaction, Version},
 };
-use std::{convert::AsRef, path::Path};
+use std::{collections::HashMap, convert::AsRef, path::Path};
 use storage_interface::{DbReader, StartupInfo};
 pub struct Aptossum {
     db: AptosDB,
@@ -65,6 +65,16 @@ impl Aptossum {
 
     pub fn get_txn_by_version(&self, version: Version) -> Result<Transaction> {
         self.db.transaction_store.get_transaction(version)
+    }
+
+    pub fn get_values_by_key_prefix(
+        &self,
+        key_prefix: &StateKeyPrefix,
+        version: Version,
+    ) -> Result<HashMap<StateKey, StateValue>> {
+        self.db
+            .state_store
+            .get_values_by_key_prefix(key_prefix, version)
     }
 
     pub fn get_state_value_by_version(

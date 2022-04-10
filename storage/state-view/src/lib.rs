@@ -56,3 +56,8 @@ where
         self.deref().is_genesis()
     }
 }
+
+pub trait StateValueResolver {
+    /// Gets the state value for a given state key.
+    fn get_state_value(&self, state_key: &StateKey) -> Result<Option<Vec<u8>>>;
+}

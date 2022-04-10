@@ -5,7 +5,8 @@
 use anyhow::Result;
 
 use aptos_types::{
-    account_address::AccountAddress, event::EventKey, state_store::state_key::StateKey,
+    account_address::AccountAddress, account_state::AccountState, event::EventKey,
+    state_store::state_key_prefix::StateKeyPrefix,
 };
 use aptosdb::aptossum::Aptossum;
 use serde::Serialize;
@@ -151,9 +152,11 @@ fn run_cmd() -> Result<()> {
             match account_cmd.account_op {
                 AccountOp::Get { version } => {
                     print(
-                        aptossum.get_state_value_by_version(
-                            StateKey::AccountAddressKey(address),
-                            version,
+                        AccountState::from_access_paths_and_values(
+                            &aptossum.get_values_by_key_prefix(
+                                &StateKeyPrefix::from(address),
+                                version,
+                            )?,
                         )?,
                         is_json,
                     )?;

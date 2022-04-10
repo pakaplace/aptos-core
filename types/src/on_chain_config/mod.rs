@@ -171,13 +171,13 @@ pub fn new_epoch_event_key() -> EventKey {
 pub fn dpn_access_path_for_config(config_id: ConfigID) -> AccessPath {
     AccessPath::new(
         config_address(),
-        AccessPath::resource_access_vec(diem_config_struct_tag(
+        AccessPath::resource_access_vec(struct_tag_for_config(
             Identifier::new(config_id.1).expect("fail to make identifier"),
         )),
     )
 }
 
-pub fn diem_config_struct_tag(config_name: Identifier) -> StructTag {
+pub fn struct_tag_for_config(config_name: Identifier) -> StructTag {
     StructTag {
         address: CORE_CODE_ADDRESS,
         module: ConfigurationResource::MODULE_NAME.to_owned(),

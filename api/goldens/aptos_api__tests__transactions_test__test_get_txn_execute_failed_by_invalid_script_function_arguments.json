@@ -2,17 +2,41 @@
   "type": "user_transaction",
   "version": "2",
   "hash": "0x0760cc0dfba7e747fdcfda4ffeffbe4fa42061482758e14803535f5babfb09a0",
+<<<<<<< HEAD
   "state_root_hash": "0x590f869a35bfa866f85baca8bd5fbab5c53f7911bc70c10d8bb29b0187d89b1d",
+=======
+<<<<<<< HEAD
+  "state_root_hash": "0x57d403ee832dd459894ce406aa25e5e7b4872d7e72e5e59ce456def80051540d",
+=======
+<<<<<<< HEAD
+  "state_root_hash": "0xa440baf7d284e00a14b2d788eebe92fbc4513e92f02cc012b1215e92234df95d",
+=======
+  "state_root_hash": "0xea9b333e535f06b40f581d2adeeb390e32cd67a4f58a780ca316fac9c3ab0ef1",
+>>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
+>>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
+>>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
   "event_root_hash": "0x414343554d554c41544f525f504c414345484f4c4445525f4841534800000000",
   "gas_used": "1",
   "success": false,
   "vm_status": "Move bytecode deserialization / verification failed, including script function not found or invalid arguments",
+<<<<<<< HEAD
   "accumulator_root_hash": "0xa456557480024a581434c0f7ef73ab6ddbb8d4dbcc52b63619b4d491185ce01b",
+=======
+<<<<<<< HEAD
+  "accumulator_root_hash": "0x63af08ac203fe45deb8b67fe983bc6a56c3e7816f3e3a37dac30e677f7ae126d",
+=======
+<<<<<<< HEAD
+  "accumulator_root_hash": "0x990ad378635d8dbccdb1ac3d6cf02de637daaa2ea670ced3db45cc723a15c6df",
+=======
+  "accumulator_root_hash": "0xa64d084bc6d97fa843a3f4ea7de4ccb4ff45beb15b09edf5723e63c121eee2aa",
+>>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
+>>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
+>>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
   "changes": [
     {
       "type": "write_resource",
       "address": "0xa550c18",
-      "state_key_hash": "0x04a62513032e695c923632ca1b9248d11e49c9b1e83bba39974adf50bbabdd8f",
+      "state_key_hash": "0xa85a3f04345fb96b11d0e4f8b85a04475452f309d6305d8a4de891bd22392995",
       "data": {
         "type": "0x1::Account::Account",
         "data": {
@@ -25,7 +49,7 @@
     {
       "type": "write_resource",
       "address": "0xa550c18",
-      "state_key_hash": "0x0429c60e9038d8b98b6cbddf810e3517cf3b029b8655d701962e6b1bfec59e04",
+      "state_key_hash": "0x6b3ef01fe5ffd2a5a4bc8921a900ff6281fce77cda659e1b89c93a08e7a6507f",
       "data": {
         "type": "0x1::TestCoin::Balance",
         "data": {
@@ -34,6 +58,21 @@
           }
         }
       }
+<<<<<<< HEAD
+=======
+    },
+    {
+      "type": "write_resource",
+      "address": "0xa550c18",
+      "state_key_hash": "0x6361dc2da389b51bf777ae884a8481cb828da9db1df3120b25046820a283770f",
+      "data": {
+        "type": "0x1::TestCoin::CoinInfo",
+        "data": {
+          "scaling_factor": "1000000",
+          "total_value": "18446744073709551615"
+        }
+      }
+>>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
     }
   ],
   "sender": "0xa550c18",

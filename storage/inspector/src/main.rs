@@ -8,13 +8,13 @@ use aptos_config::config::{RocksdbConfig, NO_OP_STORAGE_PRUNER_CONFIG};
 use aptos_logger::info;
 use aptosdb::AptosDB;
 use std::path::PathBuf;
-use storage_interface::DbReader;
+use storage_interface::{get_state_value_resolver_for_latest_version, DbReader};
 
 use aptos_types::{
-    account_address::AccountAddress, account_config::AccountResource, account_state::AccountState,
-    account_state_blob::AccountStateBlob, state_store::state_key::StateKey,
+    account_address::AccountAddress, account_state::AccountState,
+    account_state_view::AccountStateView,
 };
-use std::convert::TryFrom;
+use std::{convert::TryFrom, sync::Arc};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -82,26 +82,22 @@ fn print_txn(db: &AptosDB, version: u64) {
     );
 }
 
-fn print_account(db: &AptosDB, addr: AccountAddress) {
-    let maybe_blob = db
-        .get_latest_state_value(StateKey::AccountAddressKey(addr))
-        .expect("Unable to read AccountState");
-    if let Some(blob) = maybe_blob {
-        match AccountResource::try_from(
-            &AccountStateBlob::try_from(blob).expect("Can't convert state value to Account Blob"),
-        ) {
-            Ok(r) => {
-                println!("Account {}: {:?}", addr, r);
-            }
-            Err(e) => {
-                info!(
-                    "Account {} exists, but have no AccountResource: {}.",
-                    addr, e
-                );
+fn print_account(db: Arc<AptosDB>, addr: AccountAddress) {
+    let account_state_view =
+        AccountStateView::new(&addr, get_state_value_resolver_for_latest_version(db));
+    match account_state_view.get_account_resource() {
+        Ok(r) => {
+            if let Some(account_resource) = r {
+                println!("Account {}: {:?}", addr, account_resource)
+            } else {
+                info!("Account {} has no account resource.", addr)
             }
         }
-    } else {
-        info!("Account {} doesn't exists", addr);
+
+        Err(e) => info!(
+            "Account {} exists, but have no AccountResource: {}.",
+            addr, e
+        ),
     }
 }
 
@@ -188,7 +184,7 @@ fn main() {
                 print_txn(&db, version);
             }
             Command::PrintAccount { address } => {
-                print_account(&db, address);
+                print_account(Arc::new(db), address);
             }
             Command::ListAccounts => {
                 list_accounts(&db);

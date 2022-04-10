@@ -128,10 +128,6 @@ SignedTransaction:
 StateKey:
   ENUM:
     0:
-      AccountAddressKey:
-        NEWTYPE:
-          TYPENAME: AccountAddress
-    1:
       AccessPath:
         NEWTYPE:
           TYPENAME: AccessPath
@@ -140,7 +136,7 @@ StateKey:
         STRUCT:
           - handle: U128
           - key: BYTES
-    3:
+    1:
       Raw:
         NEWTYPE: BYTES
 StructTag:

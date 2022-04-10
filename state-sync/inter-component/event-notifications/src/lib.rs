@@ -6,13 +6,12 @@
 use aptos_id_generator::{IdGenerator, U64IdGenerator};
 use aptos_infallible::RwLock;
 use aptos_types::{
-    account_state::AccountState,
+    account_state_view::AccountStateView,
     contract_event::ContractEvent,
     event::EventKey,
     move_resource::MoveStorage,
     on_chain_config,
     on_chain_config::{config_address, ConfigID, OnChainConfigPayload},
-    state_store::state_key::StateKey,
     transaction::Version,
 };
 use channel::{aptos_channel, message_queues::QueueStyle};
@@ -20,14 +19,13 @@ use futures::{channel::mpsc::SendError, stream::FusedStream, Stream};
 use serde::{Deserialize, Serialize};
 use std::{
     collections::{HashMap, HashSet},
-    convert::TryFrom,
     iter::FromIterator,
     ops::Deref,
     pin::Pin,
     sync::Arc,
     task::{Context, Poll},
 };
-use storage_interface::DbReaderWriter;
+use storage_interface::{get_state_value_resolver_for_version, DbReaderWriter};
 use thiserror::Error;
 
 #[cfg(test)]
@@ -281,43 +279,25 @@ impl EventSubscriptionService {
             }
         }
 
-        // Fetch the account state blob
-        let (account_state_blob, _) = self
-            .storage
-            .read()
-            .reader
-            .get_state_value_with_proof_by_version(
-                &StateKey::AccountAddressKey(config_address()),
-                version,
-            )
-            .map_err(|error| {
-                Error::UnexpectedErrorEncountered(format!(
-                    "Failed to fetch account state with proof {:?}",
-                    error
-                ))
-            })?;
-        let account_state_blob = account_state_blob.ok_or_else(|| {
-            Error::UnexpectedErrorEncountered("Missing account state blob!".into())
-        })?;
+        let config_address = config_address();
 
-        // Fetch the new epoch from storage
-        let epoch = AccountState::try_from(&account_state_blob)
-            .and_then(|state| {
-                Ok(state
-                    .get_configuration_resource()?
-                    .ok_or_else(|| {
-                        Error::UnexpectedErrorEncountered(
-                            "Configuration resource does not exist!".into(),
-                        )
-                    })?
-                    .epoch())
-            })
+        let config_address_account_view = AccountStateView::new(
+            &config_address,
+            get_state_value_resolver_for_version(self.storage.read().reader.clone(), version),
+        );
+
+        let epoch = config_address_account_view
+            .get_configuration_resource()
             .map_err(|error| {
                 Error::UnexpectedErrorEncountered(format!(
-                    "Failed to fetch configuration resource! Error: {:?}",
+                    "Failed to fetch Configuration resource {:?}",
                     error
                 ))
-            })?;
+            })?
+            .ok_or_else(|| {
+                Error::UnexpectedErrorEncountered("Configuration resource does not exist!".into())
+            })?
+            .epoch();
 
         // Return the new on-chain config payload (containing all found configs at this version).
         Ok(OnChainConfigPayload::new(

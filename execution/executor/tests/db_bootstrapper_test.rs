@@ -14,7 +14,7 @@ use aptos_types::{
     access_path::AccessPath,
     account_address::AccountAddress,
     account_config::{aptos_root_address, BalanceResource},
-    account_state::AccountState,
+    account_state_view::AccountStateView,
     contract_event::ContractEvent,
     on_chain_config,
     on_chain_config::{
@@ -48,8 +48,10 @@ use move_core_types::{
     move_resource::{MoveResource, MoveStructType},
 };
 use rand::SeedableRng;
-use std::{convert::TryFrom, sync::Arc};
-use storage_interface::{DbReader, DbReaderWriter, StateSnapshotReceiver};
+use std::sync::Arc;
+use storage_interface::{
+    get_state_value_resolver_for_latest_version, DbReader, DbReaderWriter, StateSnapshotReceiver,
+};
 
 #[test]
 fn test_empty_db() {
@@ -179,13 +181,11 @@ fn get_transfer_transaction(
 }
 
 fn get_balance(account: &AccountAddress, db: &DbReaderWriter) -> u64 {
-    let account_state_blob = db
-        .reader
-        .get_latest_state_value(StateKey::AccountAddressKey(*account))
-        .unwrap()
-        .unwrap();
-    let account_state = AccountState::try_from(&account_state_blob).unwrap();
-    account_state
+    let account_state_view = AccountStateView::new(
+        account,
+        get_state_value_resolver_for_latest_version(db.reader.clone()),
+    );
+    account_state_view
         .get_balance_resources()
         .unwrap()
         .unwrap()
@@ -193,13 +193,15 @@ fn get_balance(account: &AccountAddress, db: &DbReaderWriter) -> u64 {
 }
 
 fn get_configuration(db: &DbReaderWriter) -> ConfigurationResource {
-    let config_blob = db
-        .reader
-        .get_latest_state_value(StateKey::AccountAddressKey(config_address()))
+    let config_address = config_address();
+    let config_account_state_view = AccountStateView::new(
+        &config_address,
+        get_state_value_resolver_for_latest_version(db.reader.clone()),
+    );
+    config_account_state_view
+        .get_configuration_resource()
         .unwrap()
-        .unwrap();
-    let config_state = AccountState::try_from(&config_blob).unwrap();
-    config_state.get_configuration_resource().unwrap().unwrap()
+        .unwrap()
 }
 
 fn get_state_backup(
