@@ -2,54 +2,15 @@
   "type": "user_transaction",
   "version": "4",
   "hash": "0x67d3d83ebf873c54ae08380b8984ee3bef0227c284117384b9e086498c52fb90",
-<<<<<<< HEAD
-  "state_root_hash": "0xe816b0798c46b716b29a16be84d632df2fe1075be051eab29cf2e7bcfe748853",
-=======
-<<<<<<< HEAD
-  "state_root_hash": "0x03f097eac0bd957967a51c7dadc3bc7f3bcd6f4ec46c8884d12077f97055162e",
-=======
-<<<<<<< HEAD
-  "state_root_hash": "0x09b449cbbb040af9d216198af78a09e16a8e6644c0a27aa9f3f9b1083f244a35",
-=======
-  "state_root_hash": "0x85ec13c463b13cc8de2babe3be1a87266029adf5c7ccc660fd27cd81b251d40e",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+  "state_root_hash": "0xcf2b59265ebc49e2b397c3eaa67ec78e9a553073cabc2f184619f64221381a87",
   "event_root_hash": "0x414343554d554c41544f525f504c414345484f4c4445525f4841534800000000",
   "gas_used": "21",
   "success": false,
   "vm_status": "Move abort by LIMIT_EXCEEDED - EINSUFFICIENT_BALANCE\n A limit on an amount, e.g. a currency, is exceeded. Example: withdrawal of money after account limits window\n is exhausted.\n Error codes",
-<<<<<<< HEAD
-  "accumulator_root_hash": "0xd1ae15e5fcef7264c30ddb0777f8d0821b35106b7a54316d3b9b1a34b4a0516e",
+  "accumulator_root_hash": "0x1bc43eaa80153bd280b552ac4337c5cc9e1462b03d3e935552f5fed9b16ac8a4",
   "changes": [
     {
       "type": "write_resource",
-=======
-<<<<<<< HEAD
-  "accumulator_root_hash": "0xf30c39ed3c8bf98b4bf8b939c5fbd31c515f8b0f6f4c3ca2fcad2a1dd6f28842",
-=======
-<<<<<<< HEAD
-  "accumulator_root_hash": "0x8aed0e8a39535fa9d2763892b12792a1b6c354beeaa299ee07093f7968bf92f7",
-=======
-  "accumulator_root_hash": "0xdb24d5b2b89ee79ffd01f60fcd65a8e244cebe3912be8d688e84b4df503c22bf",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
-  "changes": [
-    {
-      "type": "write_resource",
-      "address": "0xa550c18",
-      "state_key_hash": "0x6361dc2da389b51bf777ae884a8481cb828da9db1df3120b25046820a283770f",
-      "data": {
-        "type": "0x1::TestCoin::CoinInfo",
-        "data": {
-          "scaling_factor": "1000000",
-          "total_value": "18446744073709551615"
-        }
-      }
-    },
-    {
-      "type": "write_resource",
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
       "address": "0xe60912ecb0a8c365d163d258f3b9f1b62f8f9148c207643864d7ed4a2b23159",
       "state_key_hash": "0xef168b1e7ff11082ccb95c00354bce60695449d7fc4b0c83b481a95133bbc9ce",
       "data": {

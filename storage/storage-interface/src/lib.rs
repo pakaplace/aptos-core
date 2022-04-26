@@ -13,7 +13,7 @@ use aptos_types::{
     event::EventKey,
     ledger_info::LedgerInfoWithSignatures,
     move_resource::MoveStorage,
-    on_chain_config::{access_path_for_config, dpn_access_path_for_config, ConfigID},
+    on_chain_config::{access_path_for_config, ConfigID},
     proof::{
         definition::LeafCount, AccumulatorConsistencyProof, SparseMerkleProof,
         SparseMerkleRangeProof, TransactionAccumulatorSummary,
@@ -565,33 +565,10 @@ impl MoveStorage for &dyn DbReader {
                 },
                 |bytes| Ok(bytes.to_vec()),
             ),
-            _ => {
-                let dpn_config_value_option = self
-                    .get_state_value_with_proof_by_version(
-                        &StateKey::AccessPath(AccessPath::new(
-                            aptos_root_address(),
-                            dpn_access_path_for_config(config_id).path,
-                        )),
-                        version,
-                    )?
-                    .0;
-                if let Some(dpn_config_value) = dpn_config_value_option {
-                    dpn_config_value.maybe_bytes.map_or_else(
-                        || {
-                            Err(format_err!(
-                                "no dpn config {} found in aptos root account state",
-                                config_id
-                            ))
-                        },
-                        |bytes| Ok(bytes.to_vec()),
-                    )
-                } else {
-                    Err(format_err!(
-                        "no dpn config {} found in aptos root account state",
-                        config_id
-                    ))
-                }
-            }
+            _ => Err(format_err!(
+                "no config {} found in aptos root account state",
+                config_id
+            )),
         }
     }
 

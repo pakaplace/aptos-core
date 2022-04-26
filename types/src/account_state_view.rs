@@ -5,8 +5,7 @@ use crate::{
     access_path::AccessPath,
     account_config::{AccountResource, BalanceResource, CRSNResource, ChainIdResource},
     on_chain_config::{
-        access_path_for_config, dpn_access_path_for_config, ConfigurationResource, OnChainConfig,
-        ValidatorSet, Version,
+        access_path_for_config, ConfigurationResource, OnChainConfig, ValidatorSet, Version,
     },
     state_store::state_key::StateKey,
     validator_config::ValidatorConfig,
@@ -57,12 +56,7 @@ where
 
     fn get_on_chain_config<T: OnChainConfig>(&self) -> anyhow::Result<Option<T>> {
         let state_key = self.get_state_key_for_path(access_path_for_config(T::CONFIG_ID).path);
-        match self.get_resource_impl(&state_key)? {
-            Some(config) => Ok(Some(config)),
-            _ => self.get_resource_impl(
-                &self.get_state_key_for_path(dpn_access_path_for_config(T::CONFIG_ID).path),
-            ),
-        }
+        self.get_resource_impl(&state_key)
     }
 
     pub fn get_version(&self) -> anyhow::Result<Option<Version>> {

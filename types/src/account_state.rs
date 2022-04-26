@@ -6,9 +6,7 @@ use crate::{
     account_address::AccountAddress,
     account_config::{AccountResource, BalanceResource},
     account_state_blob::AccountStateBlob,
-    on_chain_config::{
-        access_path_for_config, dpn_access_path_for_config, OnChainConfig, ValidatorSet,
-    },
+    on_chain_config::{access_path_for_config, OnChainConfig, ValidatorSet},
     state_store::{state_key::StateKey, state_value::StateValue},
     validator_config::{ValidatorConfig, ValidatorOperatorConfigResource},
 };
@@ -80,10 +78,7 @@ impl AccountState {
     }
 
     pub fn get_config<T: OnChainConfig>(&self) -> Result<Option<T>> {
-        match self.get_resource_impl(&access_path_for_config(T::CONFIG_ID).path)? {
-            Some(config) => Ok(Some(config)),
-            _ => self.get_resource_impl(&dpn_access_path_for_config(T::CONFIG_ID).path),
-        }
+        self.get_resource_impl(&access_path_for_config(T::CONFIG_ID).path)
     }
 
     pub fn get_resource<T: MoveResource>(&self) -> Result<Option<T>> {

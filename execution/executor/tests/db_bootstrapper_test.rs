@@ -18,8 +18,7 @@ use aptos_types::{
     contract_event::ContractEvent,
     on_chain_config,
     on_chain_config::{
-        access_path_for_config, config_address, dpn_access_path_for_config, ConfigurationResource,
-        OnChainConfig, ValidatorSet,
+        access_path_for_config, config_address, ConfigurationResource, OnChainConfig, ValidatorSet,
     },
     proof::SparseMerkleRangeProof,
     state_store::{state_key::StateKey, state_value::StateKeyAndValue},
@@ -363,7 +362,7 @@ fn test_new_genesis() {
     let genesis_txn = Transaction::GenesisTransaction(WriteSetPayload::Direct(ChangeSet::new(
         WriteSetMut::new(vec![
             (
-                StateKey::AccessPath(dpn_access_path_for_config(ValidatorSet::CONFIG_ID)),
+                StateKey::AccessPath(access_path_for_config(ValidatorSet::CONFIG_ID)),
                 WriteOp::Value(bcs::to_bytes(&ValidatorSet::new(vec![])).unwrap()),
             ),
             (

@@ -3,36 +3,12 @@
     "type": "block_metadata_transaction",
     "version": "1",
     "hash": "0xa8fc186c28fc0f95b8233651438093e8e215a51dcd16475f5e68c0a421f6305c",
-<<<<<<< HEAD
-    "state_root_hash": "0x8e8d033419b5d2c32c863069a7745dfa57ac8f5c420ea43b0e92621ae7b855c7",
-=======
-<<<<<<< HEAD
-    "state_root_hash": "0x164e0dd6c4865a34bf26ae9427a52285a07c564851ecb8711122d106ebcd42a9",
-=======
-<<<<<<< HEAD
-    "state_root_hash": "0xa6562f0e52751bfb2ffde0f6d4e7768208feaf3a0b13ed38b7b780adc8324ec0",
-=======
-    "state_root_hash": "0x95db9c0efa411314acb183d4943eec0beeb79a1753054fced36bf3afeba11128",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+    "state_root_hash": "0x7a52e3ed93987bcbe1df3ef8582b6ee92f9c89779a0323d15282bae8e8c7c582",
     "event_root_hash": "0xd62c85b93234824cf825e9c028c3bcc59b06926039721bd7edd76b56ae9fcecf",
     "gas_used": "0",
     "success": true,
     "vm_status": "Executed successfully",
-<<<<<<< HEAD
-    "accumulator_root_hash": "0xdcf615b5978b3273ec5e81298eab09fefb28542f26fb5d8791814d53f1f31095",
-=======
-<<<<<<< HEAD
-    "accumulator_root_hash": "0x80badd4d29e8bdb11cca1e22811531cc562799a16a58706fdb4510fbc5029a0b",
-=======
-<<<<<<< HEAD
-    "accumulator_root_hash": "0x6ecde3aa44f73ee29cf7c393dad128a2f068ed600bd2587dfb9f9d91244ec41e",
-=======
-    "accumulator_root_hash": "0x7b7e6cbaca95a5c49f732d88a6c5f26e006d08fa2b13008b9e4a087ad3408274",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+    "accumulator_root_hash": "0x18c6cd581f5764153a42d513db1d4499c78288f4a01ccbddc47889e5d3a38342",
     "changes": [
       {
         "type": "write_resource",
@@ -80,36 +56,12 @@
     "type": "user_transaction",
     "version": "2",
     "hash": "0x18073cb2536317833aa630d30062383a1f00221dd3604bbce19cd262813e6c36",
-<<<<<<< HEAD
-    "state_root_hash": "0xbaf51db8bf5a5ee511928b03da8195306b126fbd66c1688ff7178ad28bab86d0",
-=======
-<<<<<<< HEAD
-    "state_root_hash": "0x3fb13a8a1fc4f0c284e4e7de179fb831aa63a25d7967c0ae32f2fdc50337b043",
-=======
-<<<<<<< HEAD
-    "state_root_hash": "0x2e4bcab624f97a0c236357d9b5644f87bcbc9a81f36f3e0c97d8d832f95525dc",
-=======
-    "state_root_hash": "0x412e0ec6a8a58cea71e8ff87eed26dd720703f8fbeafd51128e6511ffb9450f0",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+    "state_root_hash": "0x8fb92c791124dccafeba4b0c690dbd501abf3179cf2a11d37432b7b34236ad0a",
     "event_root_hash": "0x414343554d554c41544f525f504c414345484f4c4445525f4841534800000000",
     "gas_used": "92",
     "success": true,
     "vm_status": "Executed successfully",
-<<<<<<< HEAD
-    "accumulator_root_hash": "0xeee833776348d0fa4e93ee9d2faa6a4f59e16bcbb12d1477a68dc0d1b66f47c1",
-=======
-<<<<<<< HEAD
-    "accumulator_root_hash": "0xf1a105da25d374b8f9204e8295276059b0aa0dc2c28b752908bbf06155d67d3d",
-=======
-<<<<<<< HEAD
-    "accumulator_root_hash": "0x0cbe7dffce77c35e60786ae4ffca07093743c79ab9b6d2a5bb839f3df2db671b",
-=======
-    "accumulator_root_hash": "0x229f84858f3d37a126faa379b00ee5d947891e59b2e1505ac8831bf750095e94",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+    "accumulator_root_hash": "0xf2cc10fcc9bd77ebc81e917a8d32c5373e26c636bafac453a707ef531d490f49",
     "changes": [
       {
         "type": "write_resource",
@@ -139,21 +91,6 @@
       },
       {
         "type": "write_resource",
-<<<<<<< HEAD
-=======
-        "address": "0xa550c18",
-        "state_key_hash": "0x6361dc2da389b51bf777ae884a8481cb828da9db1df3120b25046820a283770f",
-        "data": {
-          "type": "0x1::TestCoin::CoinInfo",
-          "data": {
-            "scaling_factor": "1000000",
-            "total_value": "18446744073709551615"
-          }
-        }
-      },
-      {
-        "type": "write_resource",
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
         "address": "0xe60912ecb0a8c365d163d258f3b9f1b62f8f9148c207643864d7ed4a2b23159",
         "state_key_hash": "0xef168b1e7ff11082ccb95c00354bce60695449d7fc4b0c83b481a95133bbc9ce",
         "data": {

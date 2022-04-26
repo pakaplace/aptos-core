@@ -157,24 +157,13 @@ pub trait OnChainConfig: Send + Sync + DeserializeOwned {
         let access_path = access_path_for_config(Self::CONFIG_ID);
         match storage.fetch_config(access_path) {
             Some(bytes) => Self::deserialize_into_config(&bytes).ok(),
-            None => storage
-                .fetch_config(dpn_access_path_for_config(Self::CONFIG_ID))
-                .and_then(|bytes| Self::deserialize_into_config(&bytes).ok()),
+            None => None,
         }
     }
 }
 
 pub fn new_epoch_event_key() -> EventKey {
     EventKey::new_from_address(&config_address(), 4)
-}
-
-pub fn dpn_access_path_for_config(config_id: ConfigID) -> AccessPath {
-    AccessPath::new(
-        config_address(),
-        AccessPath::resource_access_vec(struct_tag_for_config(
-            Identifier::new(config_id.1).expect("fail to make identifier"),
-        )),
-    )
 }
 
 pub fn struct_tag_for_config(config_name: Identifier) -> StructTag {

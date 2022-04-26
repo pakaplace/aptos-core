@@ -2,40 +2,13 @@
   {
     "type": "genesis_transaction",
     "version": "0",
-<<<<<<< HEAD
-    "hash": "0xb7fe07881c5745a54bd09c524a002399f6c02f89168da1c38219f85ec9afb7ed",
-    "state_root_hash": "0x4a3588bf573f6200c24eb5a9833369bf49bd9517292d7476e6a513af5461db4a",
-=======
-<<<<<<< HEAD
-    "hash": "0xeaf4ce4365cf9d84d1a1909be532e997395931313be24ef68895bfe21aa99928",
-    "state_root_hash": "0xa6d1f9bc8033def52de2b827fb63209e11c1356775c897b1320f5c969ef3d7f9",
-=======
-<<<<<<< HEAD
-    "hash": "0xe152b2525e1a0d05bbae32b4ccdbe6aa2e59781f26380784cffff54b78ee7f00",
-    "state_root_hash": "0x1c1a570cb768411bce0b76f63aa94f0aaae30c1449439d541e55bec1f1e133bd",
-=======
-    "hash": "0x1567f05dd1ba9060843dedf577dfd1148298d5dba5118166af7273209a1d4aea",
-    "state_root_hash": "0x8fdb80fbc922613707d4443c264742d848999d1afa6a94c3d2f3d5d42845b38c",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+    "hash": "0xf0edf438fe3878d2ea2ada5a07b2a12374af5b246fd3acbfe95a75449ab8f783",
+    "state_root_hash": "0xdc94301ec6fb1020e29adc85c0c6a066d24e8966929b01c1fc9acc3e4591d140",
     "event_root_hash": "0xcbdbb1b830d1016d45a828bb3171ea81826e8315f14140acfbd7886f49fbcb40",
     "gas_used": "0",
     "success": true,
     "vm_status": "Executed successfully",
-<<<<<<< HEAD
-    "accumulator_root_hash": "0x78d8f91ff2931c75f83289d81376f770c18afbae44394e87ddbb3e56e97ce3f5",
-=======
-<<<<<<< HEAD
-    "accumulator_root_hash": "0x58bc4a4cb571d7b38c129e47c4f9398131707f182f17e5a5d7b4c00e78cc8e34",
-=======
-<<<<<<< HEAD
-    "accumulator_root_hash": "0x86ba01ad9f9c18e18274c3e9f67f65b615f162504dc9a89ce9e98b0f318cfbc5",
-=======
-    "accumulator_root_hash": "0x9edb47f55adfe9aca90a5d58cf059df0628bf898ed8aff7b7bbb288c49a13977",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+    "accumulator_root_hash": "0x7c3d79d0da16ed1884486569b8db743bbf05bc7bfd4588dabd02f9bc014153b2",
     "changes": [
       {
         "type": "write_resource",

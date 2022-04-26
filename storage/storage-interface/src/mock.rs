@@ -26,7 +26,7 @@ impl DbReader for MockDbReaderWriter {
                     .cloned()
                     .map(StateValue::from))
             }
-            StateKey::Raw(_) => Err(anyhow!("Not supported state key type {:?}", state_key)),
+            _ => Err(anyhow!("Not supported state key type {:?}", state_key)),
         }
     }
 }

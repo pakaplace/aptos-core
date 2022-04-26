@@ -2,36 +2,12 @@
   "type": "user_transaction",
   "version": "2",
   "hash": "0xc00c694596b002f38c4a5eb5b8b20a772cb2bc7e5aacd3b2637e73bec802796e",
-<<<<<<< HEAD
-  "state_root_hash": "0x590f869a35bfa866f85baca8bd5fbab5c53f7911bc70c10d8bb29b0187d89b1d",
-=======
-<<<<<<< HEAD
-  "state_root_hash": "0x57d403ee832dd459894ce406aa25e5e7b4872d7e72e5e59ce456def80051540d",
-=======
-<<<<<<< HEAD
-  "state_root_hash": "0xa440baf7d284e00a14b2d788eebe92fbc4513e92f02cc012b1215e92234df95d",
-=======
-  "state_root_hash": "0xea9b333e535f06b40f581d2adeeb390e32cd67a4f58a780ca316fac9c3ab0ef1",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+  "state_root_hash": "0xb67a1ac91242a87a36307870aa464a26ca69f957850e90392bd17df55831c6a4",
   "event_root_hash": "0x414343554d554c41544f525f504c414345484f4c4445525f4841534800000000",
   "gas_used": "1",
   "success": false,
   "vm_status": "Move bytecode deserialization / verification failed, including script function not found or invalid arguments",
-<<<<<<< HEAD
-  "accumulator_root_hash": "0xd8f750b91d389cacc8a5c4cae3d1fd0a48a52919ff3b98845bdaf78b4ca353e6",
-=======
-<<<<<<< HEAD
-  "accumulator_root_hash": "0xf18eb932cac100a663d3949ea03658dd7240b9f29a5ced2503bbbf7c1a219f4a",
-=======
-<<<<<<< HEAD
-  "accumulator_root_hash": "0xcb5ce63ed138f2859173333d33445ac2d0f69719f0f3acec3505dfa1fe56778d",
-=======
-  "accumulator_root_hash": "0xe842ac24c52770c256ddfd32a18d69b45053447454be4e58440fa50cd979b867",
->>>>>>> 6c20ed3f0 ([Storage] Fine grained account storage)
->>>>>>> 1a37ce385 ([Storage] Fine grained account storage)
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
+  "accumulator_root_hash": "0x595472386fd8216250c920b7252f00cd70eb49272b5baa5450667b1fb6aab833",
   "changes": [
     {
       "type": "write_resource",
@@ -58,21 +34,6 @@
           }
         }
       }
-<<<<<<< HEAD
-=======
-    },
-    {
-      "type": "write_resource",
-      "address": "0xa550c18",
-      "state_key_hash": "0x6361dc2da389b51bf777ae884a8481cb828da9db1df3120b25046820a283770f",
-      "data": {
-        "type": "0x1::TestCoin::CoinInfo",
-        "data": {
-          "scaling_factor": "1000000",
-          "total_value": "18446744073709551615"
-        }
-      }
->>>>>>> ff1ae5ca9 ([Storage] Fine grained account storage)
     }
   ],
   "sender": "0xa550c18",
