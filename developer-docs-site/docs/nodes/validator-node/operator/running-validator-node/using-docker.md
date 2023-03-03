@@ -95,15 +95,15 @@ Docker method has only been tested on Linux, Windows, and Intel macOS. If you ar
 
     - `docker-compose.yaml` docker compose file to run validator and fullnode
     - `keys` folder containing:
-      - `public-keys.yaml`: Public keys for the owner account, consensus, networking (from step 4).
-      - `private-keys.yaml`: Private keys for the owner account, consensus, networking (from step 4).
-      - `validator-identity.yaml`: Private keys for setting the Validator identity (from step 4).
+      - `public-keys.yaml`: Public keys for the owner account, consensus, networking (from step 3).
+      - `private-keys.yaml`: Private keys for the owner account, consensus, networking (from step 3).
+      - `validator-identity.yaml`: Private keys for setting the Validator identity (from step 3).
       - `validator-full-node-identity.yaml`: Private keys for setting validator full node identity (from step 4).
     - `username` folder containing: 
-      - `owner.yaml`: define owner, operator, and voter mapping. They are all the same account in test mode (from step 5).
-      - `operator.yaml`: Node information that will be used for both the Validator and the fullnode (from step 5). 
-    - `waypoint.txt`: The waypoint for the genesis transaction (from step 6).
-    - `genesis.blob` The genesis binary that contains all the information about the framework, validatorSet and more (from step 6).
+      - `owner.yaml`: define owner, operator, and voter mapping. They are all the same account in test mode (from step 4).
+      - `operator.yaml`: Node information that will be used for both the Validator and the fullnode (from step 4). 
+    - `waypoint.txt`: The waypoint for the genesis transaction (from step 5).
+    - `genesis.blob` The genesis binary that contains all the information about the framework, validatorSet and more (from step 5).
 
 7. Run docker-compose: `docker-compose up`. (or `docker compose up` depends on your version)
 
